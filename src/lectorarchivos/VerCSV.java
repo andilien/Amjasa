@@ -77,6 +77,12 @@ public class VerCSV extends javax.swing.JPanel {
               col[2] = nextLine[2];
               col[3] = nextLine[12];
               col[4] = nextLine[11];
+              
+              //Saber fecha actual y anterior para sacar el consumo.
+              //Sabiendo la lectura del la fecha actual - la fecha anterior = consumo.
+              
+              
+              
               model.addRow(col);
            }
            
