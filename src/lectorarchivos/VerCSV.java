@@ -65,12 +65,15 @@ public class VerCSV extends javax.swing.JPanel {
         DefaultTableModel model = new DefaultTableModel(null,titulos);
         
         //Recoger fecha del item actual en string
-        String fecha = null;
+        String fechaActual = null;
         
         //Ahora separamos el dia/mes/año;
         String delimiter = "/";
-        String [] dato;
-        //dato = fecha.split(delimiter);
+        String [] datoActual;
+        
+        String fechaAnterior = null;
+        String [] datoAnterior;
+        
         
         //Lectura del fichero
         try {
@@ -85,21 +88,29 @@ public class VerCSV extends javax.swing.JPanel {
                 col[2] = nextLine[2];
                 col[3] = nextLine[12];
                 col[4] = nextLine[11];
-
-
-                //Saber fecha actual y anterior para sacar el consumo.
-                //Sabiendo la lectura del la fecha actual - la fecha anterior = consumo.
-
-
-
+                
+                //Añadimos la columna al modelo
                 model.addRow(col);
                 
-                fecha = col[0];
-                dato = fecha.split(delimiter);
-                System.out.println("DIA --> "+dato[0]);
-                System.out.println("MES --> "+dato[1]);
-                System.out.println("AÑO --> "+dato[2]);
-                System.out.println("-----------------------");
+                /*
+                Saber fecha actual y anterior para sacar el consumo.
+                Sabiendo la lectura del la fecha actual - la fecha anterior = consumo.
+                */
+                //Comprobar si el string fecha esta vacio
+                /*if(fechaActual==null){
+                    //Ya tenemos la fecha delimitada
+                    fechaActual = col[0];
+                    datoActual = fechaActual.split(delimiter);
+                    System.out.println("DIA --> "+datoActual[0]);
+                    System.out.println("MES --> "+datoActual[1]);
+                    System.out.println("AÑO --> "+datoActual[2]);
+                    System.out.println("-----------------------");
+                }else{
+                    //Si no esta vacio el campo string se procede a la comprobación
+                    //Creación de un nuevo string que será la fecha 2
+                    fechaAnterior = col[0];
+                    datoAnterior = fechaAnterior.split(delimiter);
+                }*/
             }
            
             //Editar el modelo de la tabla
