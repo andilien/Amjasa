@@ -5,11 +5,13 @@
  */
 package lectorarchivos;
 
+import com.opencsv.CSVReader;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -44,40 +46,51 @@ public class VerCSV extends javax.swing.JPanel {
         BufferedReader br = null;
         String line = "";
         //Asignar un separador
-        String csvSplitBy = ";";
-        
+        char csvSplitBy = ';';
+        char quote = '"';
+        CSVReader reader = null;
+       
         //Realizar lectura del fichero para coger los titulos
-        String  titulos [] = new String[4];
-   
-        br = new BufferedReader(new FileReader(rutaFichero));
+        String  titulos [] = new String[5];
+
+                titulos[0] = "Fecha";
+                titulos[1] = "Hora";
+                titulos[2] = "Número de serie";
+                titulos[3] = "Lectura";
+                titulos[4] = "Consumo";
         
-        //Empieza la lectura
-        while((line = br.readLine()) != null){
-            String[] cabecera = line.split(csvSplitBy);
-            if(cabecera[0].equals("Pozo")
-                && cabecera[1].equals("Localizacion")
-                && cabecera[2].equals("Litros")
-                && cabecera[3].equals("Fecha")){
-                
-                titulos[0] = cabecera[0];
-                titulos[1] = cabecera[1];
-                titulos[2] = cabecera[2];
-                titulos[3] = cabecera[3];
-            }
-            
-        }
-        
-        //Volver a los valores iniciales
-        line = "";
-        br = null;
-        
-        
-        String fila[] = new String[4];
-        
+        //Array de filas
+        String col[] = new String[5];
+        //Creacion del modelo
         DefaultTableModel model = new DefaultTableModel(null,titulos);
         
-        
-        try{
+        //Lectura del fichero
+         try {
+           reader = new CSVReader(new FileReader(rutaFichero),csvSplitBy,quote);
+           String[] nextLine = null;
+
+           while ((nextLine = reader.readNext()) != null) {
+              //System.out.println(Arrays.toString(nextLine));
+              //Asignar a cada fila el valor
+              col[0] = nextLine[0];
+              col[1] = nextLine[1];
+              col[2] = nextLine[2];
+              col[3] = nextLine[12];
+              col[4] = nextLine[11];
+              model.addRow(col);
+           }
+           
+           //Editar el modelo de la tabla
+           tabla.setModel(model);
+
+        } catch (Exception e) {
+           
+        } finally {
+           if (null != reader) {
+              reader.close();
+           } 
+        }
+        /*try{
             br = new BufferedReader(new FileReader(rutaFichero));
             
             //Empieza la lectura del csv
@@ -90,15 +103,13 @@ public class VerCSV extends javax.swing.JPanel {
                     en el array toca almacenarlos en la tabla
                 */
                 
-                fila[0] = datos[0];
+                /*fila[0] = datos[0];
                 fila[1] = datos[1];
                 fila[2] = datos[2];
                 fila[3] = datos[3];
+                fila[4] = datos[4];
                 
-                //Realizamos la comprobación de que las filas no se igual a lo especificado...
-                if(!fila[0].equals("Pozo") && !fila[1].equals("Localizacion") && !fila[2].equals("Litros")){
-                    model.addRow(fila);
-                }
+                model.addRow(fila);
             }
             tabla.setModel(model);
         }catch(IOException e){
@@ -111,7 +122,7 @@ public class VerCSV extends javax.swing.JPanel {
                     e.printStackTrace();
                 }
             }
-        }
+        }*/
     }
 
     /**
@@ -133,11 +144,11 @@ public class VerCSV extends javax.swing.JPanel {
 
         jTableInfoCSV.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "CONTADOR", "LOCALIZACIÓN", "LITROS"
+                "Fecha", "Hora", "Número de serie", "Lectura", "Contador"
             }
         ));
         jScrollPane1.setViewportView(jTableInfoCSV);
