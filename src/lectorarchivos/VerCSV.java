@@ -5,6 +5,11 @@
  */
 package lectorarchivos;
 
+/*Se ha creado una libreria la cual tiene el jar
+ para que a la hora de abrir el proyecto en otro pc
+no tengamos que importar la libreria.
+*/
+
 import com.opencsv.CSVReader;
 import java.io.BufferedReader;
 import java.io.File;
