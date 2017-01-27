@@ -64,30 +64,46 @@ public class VerCSV extends javax.swing.JPanel {
         //Creacion del modelo
         DefaultTableModel model = new DefaultTableModel(null,titulos);
         
+        //Recoger fecha del item actual en string
+        String fecha = null;
+        
+        //Ahora separamos el dia/mes/año;
+        String delimiter = "/";
+        String [] dato;
+        //dato = fecha.split(delimiter);
+        
         //Lectura del fichero
-         try {
-           reader = new CSVReader(new FileReader(rutaFichero),csvSplitBy,quote);
-           String[] nextLine = null;
+        try {
+            reader = new CSVReader(new FileReader(rutaFichero),csvSplitBy,quote);
+            String[] nextLine = null;
 
-           while ((nextLine = reader.readNext()) != null) {
-              //System.out.println(Arrays.toString(nextLine));
-              //Asignar a cada fila el valor
-              col[0] = nextLine[0];
-              col[1] = nextLine[1];
-              col[2] = nextLine[2];
-              col[3] = nextLine[12];
-              col[4] = nextLine[11];
-              
-              //Saber fecha actual y anterior para sacar el consumo.
-              //Sabiendo la lectura del la fecha actual - la fecha anterior = consumo.
-              
-              
-              
-              model.addRow(col);
-           }
+            while ((nextLine = reader.readNext()) != null) {
+                //System.out.println(Arrays.toString(nextLine));
+                //Asignar a cada fila el valor
+                col[0] = nextLine[0];
+                col[1] = nextLine[1];
+                col[2] = nextLine[2];
+                col[3] = nextLine[12];
+                col[4] = nextLine[11];
+
+
+                //Saber fecha actual y anterior para sacar el consumo.
+                //Sabiendo la lectura del la fecha actual - la fecha anterior = consumo.
+
+
+
+                model.addRow(col);
+                
+                fecha = col[0];
+                dato = fecha.split(delimiter);
+                System.out.println("DIA --> "+dato[0]);
+                System.out.println("MES --> "+dato[1]);
+                System.out.println("AÑO --> "+dato[2]);
+                System.out.println("-----------------------");
+            }
            
-           //Editar el modelo de la tabla
-           tabla.setModel(model);
+            //Editar el modelo de la tabla
+            tabla.setModel(model);
 
         } catch (Exception e) {
            
