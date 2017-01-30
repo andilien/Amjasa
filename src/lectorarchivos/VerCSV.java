@@ -79,7 +79,7 @@ public class VerCSV extends javax.swing.JPanel {
         String lecturaAnterior = null;
         
         //Consumo
-        int consumo = 0;
+        double consumo = 0;
         
         
         //Lectura del fichero
@@ -93,20 +93,20 @@ public class VerCSV extends javax.swing.JPanel {
                 col[0] = nextLine[0];//Línea de la fecha Actual
                 col[1] = nextLine[1];
                 col[2] = nextLine[2];
-                col[4] = nextLine[11];//Consumo
                 col[3] = nextLine[12];//Lectura
+                col[4] = nextLine[11];//Consumo
                 
                 
-                if(fechaActual == null){
+                if(fechaActual == null && lecturaActual == null){
                    //Aquí se asigna la fecha actual;
                    fechaActual = col[0];
                    //Aquí se le asigna la lectura actual
-                   //lecturaActual = col[12];
+                   //lecturaActual = col[3];
                 }else{
                     //Se le asigna la fecha a fechaAnterior
                     fechaAnterior = col[0];
                     //Aquí se le asigna la lectura anterior
-                    //lecturaAnterior = col[12];
+                    //lecturaAnterior = col[3];
                     
                     //Comprobar fechActual con anterior
                     if(fechaActual.compareTo(fechaAnterior) == 1){
@@ -122,13 +122,22 @@ public class VerCSV extends javax.swing.JPanel {
                     System.out.println("Fecha anterior --> "+fechaAnterior);
                     System.out.println("----------------------------------------");
                     
+                    //Antes de vaciar nada sacamos el consumo de cada cosa
+                    //consumo = Double.parseDouble(lecturaActual)-Double.parseDouble(lecturaAnterior);
+                    
+                    //Ahora asignamos el consumo a la col[4];
+                    //col[4] = String.valueOf(consumo);
+                    
+                    //Vaciamos las acturales fecha y lectura
+                    fechaActual = null;
+
                 }
-                
-                
-                
                 
                 //Añadimos la columna al modelo
                 model.addRow(col);
+                
+                
+                
                 
                 /*
                 Saber fecha actual y anterior para sacar el consumo.
@@ -151,6 +160,28 @@ public class VerCSV extends javax.swing.JPanel {
                 }*/
             }
            
+            //recorrer el modelo
+            for(int i=0;i<model.getRowCount();i++){
+                if(lecturaActual == null){
+                    lecturaActual = model.getValueAt(i, 3).toString();
+                    System.out.println("Lectura actual --> "+lecturaActual);
+                }else{
+                    lecturaAnterior = model.getValueAt(i, 3).toString();
+                    System.out.println("Lectura anterior --> "+lecturaAnterior);
+
+                    //Lectura anterior - actual = consumo
+                    consumo = Double.parseDouble(lecturaActual) - Double.parseDouble(lecturaAnterior);
+                    System.out.println("Consumo = "+consumo);
+
+                    model.setValueAt(consumo, i, 4);
+                    
+                    System.out.println("---------------------------------------------------");
+                    
+                    lecturaActual = lecturaAnterior;
+                }     
+            }
+            
+                
             //Editar el modelo de la tabla
             tabla.setModel(model);
 
