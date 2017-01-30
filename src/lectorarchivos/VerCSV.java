@@ -71,13 +71,14 @@ public class VerCSV extends javax.swing.JPanel {
         
         //Recoger fecha del item actual en string
         String fechaActual = null;
-        
-        //Ahora separamos el dia/mes/año;
-        String delimiter = "/";
-        String [] datoActual;
-        
+        //Recoger la fecha anterior en un string
         String fechaAnterior = null;
-        String [] datoAnterior;
+        
+        //Recoger las lecturas
+        int lecturaActual = 0;
+        int lecturaAnterior = 0;
+        
+        //Recoger las lecturas
         
         
         //Lectura del fichero
@@ -88,7 +89,34 @@ public class VerCSV extends javax.swing.JPanel {
             while ((nextLine = reader.readNext()) != null) {
                 //System.out.println(Arrays.toString(nextLine));
                 //Asignar a cada fila el valor
-                col[0] = nextLine[0];
+                col[0] = nextLine[0];//Línea de la fecha Actual
+                if(fechaActual == null){
+                   //Aquí se asigna la fecha actual;
+                   fechaActual = col[0];
+                }else{
+                    //Se le asigna la fecha a fechaAnterior
+                    fechaAnterior = col[0];
+                    
+                    //Comprobar fechActual con anterior
+                    if(fechaActual.compareTo(fechaAnterior) == 1){
+                        //La fecha sera menor
+                    }else if(fechaActual.compareTo(fechaAnterior) == -1){
+                        //Es que la fecha es mayor
+                    }else{
+                        //La fecha es menor
+                    }
+                    
+                    //Mostrar fecha actual y menor
+                    System.out.println("Fecha actual --> "+fechaActual);
+                    System.out.println("Fecha anterior --> "+fechaAnterior);
+                    System.out.println("----------------------------------------");
+                    
+                    
+                    
+                    //Se pasa fechaActual a null;
+                    fechaActual = null;
+                }
+                
                 col[1] = nextLine[1];
                 col[2] = nextLine[2];
                 col[3] = nextLine[12];
