@@ -75,10 +75,11 @@ public class VerCSV extends javax.swing.JPanel {
         String fechaAnterior = null;
         
         //Recoger las lecturas
-        int lecturaActual = 0;
-        int lecturaAnterior = 0;
+        String lecturaActual = null;
+        String lecturaAnterior = null;
         
-        //Recoger las lecturas
+        //Consumo
+        int consumo = 0;
         
         
         //Lectura del fichero
@@ -90,12 +91,22 @@ public class VerCSV extends javax.swing.JPanel {
                 //System.out.println(Arrays.toString(nextLine));
                 //Asignar a cada fila el valor
                 col[0] = nextLine[0];//Línea de la fecha Actual
+                col[1] = nextLine[1];
+                col[2] = nextLine[2];
+                col[4] = nextLine[11];//Consumo
+                col[3] = nextLine[12];//Lectura
+                
+                
                 if(fechaActual == null){
                    //Aquí se asigna la fecha actual;
                    fechaActual = col[0];
+                   //Aquí se le asigna la lectura actual
+                   //lecturaActual = col[12];
                 }else{
                     //Se le asigna la fecha a fechaAnterior
                     fechaAnterior = col[0];
+                    //Aquí se le asigna la lectura anterior
+                    //lecturaAnterior = col[12];
                     
                     //Comprobar fechActual con anterior
                     if(fechaActual.compareTo(fechaAnterior) == 1){
@@ -111,16 +122,10 @@ public class VerCSV extends javax.swing.JPanel {
                     System.out.println("Fecha anterior --> "+fechaAnterior);
                     System.out.println("----------------------------------------");
                     
-                    
-                    
-                    //Se pasa fechaActual a null;
-                    fechaActual = null;
                 }
                 
-                col[1] = nextLine[1];
-                col[2] = nextLine[2];
-                col[3] = nextLine[12];
-                col[4] = nextLine[11];
+                
+                
                 
                 //Añadimos la columna al modelo
                 model.addRow(col);
