@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -135,32 +136,11 @@ public class VerCSV extends javax.swing.JPanel {
                 
                 //Añadimos la columna al modelo
                 model.addRow(col);
-                
-                
-                
-                
-                /*
-                Saber fecha actual y anterior para sacar el consumo.
-                Sabiendo la lectura del la fecha actual - la fecha anterior = consumo.
-                */
-                //Comprobar si el string fecha esta vacio
-                /*if(fechaActual==null){
-                    //Ya tenemos la fecha delimitada
-                    fechaActual = col[0];
-                    datoActual = fechaActual.split(delimiter);
-                    System.out.println("DIA --> "+datoActual[0]);
-                    System.out.println("MES --> "+datoActual[1]);
-                    System.out.println("AÑO --> "+datoActual[2]);
-                    System.out.println("-----------------------");
-                }else{
-                    //Si no esta vacio el campo string se procede a la comprobación
-                    //Creación de un nuevo string que será la fecha 2
-                    fechaAnterior = col[0];
-                    datoAnterior = fechaAnterior.split(delimiter);
-                }*/
             }
            
-            //recorrer el modelo
+            ArrayList <Double> consumoRecogido = new ArrayList<Double>();
+            
+            //Recorrer el modelo
             for(int i=0;i<model.getRowCount();i++){
                 if(lecturaActual == null){
                     lecturaActual = model.getValueAt(i, 3).toString();
@@ -172,15 +152,27 @@ public class VerCSV extends javax.swing.JPanel {
                     //Lectura anterior - actual = consumo
                     consumo = Double.parseDouble(lecturaActual) - Double.parseDouble(lecturaAnterior);
                     System.out.println("Consumo = "+consumo);
-
-                    model.setValueAt(consumo, i, 4);
+                    
+                    //Insertamos el consumo dentro de un arraylist
+                    consumoRecogido.add(consumo);
+                    
+                    //model.setValueAt(consumo, i, 4);
+                    
                     
                     System.out.println("---------------------------------------------------");
                     
                     lecturaActual = lecturaAnterior;
                 }     
             }
+            consumoRecogido.add(0.0);
             
+            System.out.println(consumoRecogido.toString());
+            System.out.println(model.getRowCount());
+            
+            //Ahora vamos metiendo el consumo recogido dentro del modelo
+            for(int i=0;i<consumoRecogido.size();i++){
+                model.setValueAt(consumoRecogido.get(i).toString(), i, 4);
+            }
                 
             //Editar el modelo de la tabla
             tabla.setModel(model);
@@ -192,39 +184,6 @@ public class VerCSV extends javax.swing.JPanel {
               reader.close();
            } 
         }
-        /*try{
-            br = new BufferedReader(new FileReader(rutaFichero));
-            
-            //Empieza la lectura del csv
-            while((line = br.readLine())!=null){
-                //Usar el ';' como separador
-                String[] datos = line.split(csvSplitBy);
-                
-                /*
-                    Una vez tengamos los datos almacenados
-                    en el array toca almacenarlos en la tabla
-                */
-                
-                /*fila[0] = datos[0];
-                fila[1] = datos[1];
-                fila[2] = datos[2];
-                fila[3] = datos[3];
-                fila[4] = datos[4];
-                
-                model.addRow(fila);
-            }
-            tabla.setModel(model);
-        }catch(IOException e){
-            e.printStackTrace();
-        }finally{
-            if(br!=null){
-                try{
-                    br.close();
-                }catch(IOException e){
-                    e.printStackTrace();
-                }
-            }
-        }*/
     }
 
     /**
