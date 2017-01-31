@@ -11,6 +11,7 @@ no tengamos que importar la libreria.
 */
 
 import com.opencsv.CSVReader;
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,6 +21,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.DefaultPieDataset;
 
 /**
  *
@@ -27,6 +35,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class VerCSV extends javax.swing.JPanel {
     File fichero = null;
+    private static DefaultTableModel model;
     
     /**
      * Creates new form VerCSV
@@ -41,9 +50,7 @@ public class VerCSV extends javax.swing.JPanel {
             Tendremos que pasarle la tabla y el la ruta
             del fichero
         */
-        llenarTabla(jTableInfoCSV,fichero);
-        
-        
+        llenarTabla(jTableInfoCSV,fichero);        
     }
     
     public static void llenarTabla(JTable tabla, File fichero) throws FileNotFoundException, IOException{
@@ -68,7 +75,7 @@ public class VerCSV extends javax.swing.JPanel {
         //Array de filas
         String col[] = new String[5];
         //Creacion del modelo
-        DefaultTableModel model = new DefaultTableModel(null,titulos);
+        model = new DefaultTableModel(null,titulos);
         
         //Recoger fecha del item actual en string
         String fechaActual = null;
@@ -198,6 +205,7 @@ public class VerCSV extends javax.swing.JPanel {
         jLabelRutaFichero = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableInfoCSV = new javax.swing.JTable();
+        jButtonVerGrafica = new javax.swing.JButton();
 
         jLabelRutaFichero.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabelRutaFichero.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -214,32 +222,54 @@ public class VerCSV extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(jTableInfoCSV);
 
+        jButtonVerGrafica.setText("Ver Gráfica");
+        jButtonVerGrafica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVerGraficaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(108, 108, 108)
-                .addComponent(jLabelRutaFichero, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(122, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(89, 89, 89)
+                                .addComponent(jLabelRutaFichero, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(278, 278, 278)
+                                .addComponent(jButtonVerGrafica)))
+                        .addGap(0, 221, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addGap(10, 10, 10)
                 .addComponent(jLabelRutaFichero, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE)
-                .addGap(21, 21, 21))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
+                .addGap(12, 12, 12)
+                .addComponent(jButtonVerGrafica)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButtonVerGraficaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerGraficaActionPerformed
+        MostrarGraficaCSV grafica = new MostrarGraficaCSV(jTableInfoCSV);
+        grafica.setResizable(false);
+        grafica.setVisible(true);
+    }//GEN-LAST:event_jButtonVerGraficaActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonVerGrafica;
     private static javax.swing.JLabel jLabelRutaFichero;
     private javax.swing.JScrollPane jScrollPane1;
     private static javax.swing.JTable jTableInfoCSV;
