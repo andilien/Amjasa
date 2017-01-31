@@ -36,8 +36,10 @@ public class MostrarGraficaCSV extends javax.swing.JFrame {
         DefaultCategoryDataset dataset =  new DefaultCategoryDataset();
         
         //Recorremos la columna del consumo de la tabla
+        String fecha;
         for(int i=0;i<jTableInfoCSV.getRowCount();i++){
-             dataset.setValue(Double.parseDouble(jTableInfoCSV.getValueAt(i, 4).toString()),"Consumo", jTableInfoCSV.getValueAt(i, 0).toString());
+            fecha = jTableInfoCSV.getValueAt(i,4).toString();
+            dataset.setValue(Double.parseDouble(fecha),"Consumo", jTableInfoCSV.getValueAt(i, 0).toString());
         }
         
         //Creando el gráfico
@@ -76,7 +78,9 @@ public class MostrarGraficaCSV extends javax.swing.JFrame {
         ChartFrame frame = new ChartFrame("CONSUMO",chart);
         frame.pack();
         frame.setVisible(true);
-        panel.add(frame);
+        
+        //panel.add(frame);
+        
     }
 
     /**
