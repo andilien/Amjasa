@@ -15,6 +15,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.PieDataset;
 
 /**
  *
@@ -35,6 +36,8 @@ public class MostrarGraficaCSV extends javax.swing.JFrame {
         //Fuente de datos
         DefaultCategoryDataset dataset =  new DefaultCategoryDataset();
         
+        
+        
         //Recorremos la columna del consumo de la tabla
         String fecha;
         for(int i=0;i<jTableInfoCSV.getRowCount();i++){
@@ -51,35 +54,13 @@ public class MostrarGraficaCSV extends javax.swing.JFrame {
                 chart.setBackgroundPaint(Color.white);
                 chart.removeLegend();
         
-        /*panel = new JPanel();
-        getContentPane().add(panel);
-        // Fuente de Datos
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        dataset.setValue(8, "Mujeres", "Lunes");
-        dataset.setValue(7, "Hombres", "Lunes");
-        dataset.setValue(9, "Mujeres", "Martes");
-        dataset.setValue(4, "Hombres", "Martes");
-        dataset.setValue(4, "Mujeres", "Miercoles");
-        dataset.setValue(5, "Hombres", "Miercoles");
-        dataset.setValue(8, "Mujeres", "Jueves");
-        dataset.setValue(9, "Hombres", "Jueves");
-        dataset.setValue(7, "Mujeres", "Viernes");
-        dataset.setValue(8, "Hombres", "Viernes");
-        // Creando el Grafico
-        JFreeChart chart = ChartFactory.createBarChart3D
-        ("Participacion por Genero","Genero", "Dias", 
-        dataset, PlotOrientation.VERTICAL, true,true, false);
-        chart.setBackgroundPaint(Color.cyan);
-        chart.getTitle().setPaint(Color.black); 
-        CategoryPlot p = chart.getCategoryPlot(); 
-        p.setRangeGridlinePaint(Color.red); */
         
         // Mostrar Grafico
         ChartFrame frame = new ChartFrame("CONSUMO",chart);
         frame.pack();
         frame.setVisible(true);
         
-        //panel.add(frame);
+        panel.add(frame);
         
     }
 
