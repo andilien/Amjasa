@@ -40,7 +40,8 @@ public class MostrarGraficaCSV extends javax.swing.JFrame {
         
         //Recorremos la columna del consumo de la tabla
         for(int i=jTableInfoCSV.getRowCount()-1;i>=0;i--){
-            dataset.setValue(Double.parseDouble(jTableInfoCSV.getValueAt(i,4).toString()),"Consumo", jTableInfoCSV.getValueAt(i, 0).toString());
+            if (Double.parseDouble(jTableInfoCSV.getValueAt(i,4).toString()) != 0)
+                dataset.setValue(Double.parseDouble(jTableInfoCSV.getValueAt(i,4).toString()),"Consumo", jTableInfoCSV.getValueAt(i, 0).toString());
         }
         
         //Creando el gráfico
