@@ -54,6 +54,7 @@ public class MostrarGraficaCSV extends javax.swing.JFrame {
         // Mostrar Grafico
         ChartFrame frame = new ChartFrame("CONSUMO",chart);
         frame.pack();
+        frame.getChartPanel().setMouseZoomable(false);
         frame.setVisible(true);
         
         panel.add(frame);
