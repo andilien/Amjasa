@@ -74,6 +74,7 @@ public class VerCSV extends javax.swing.JPanel {
         
         //Array de filas
         String col[] = new String[5];
+        
         //Creacion del modelo
         model = new DefaultTableModel(null,titulos);
         
@@ -219,7 +220,15 @@ public class VerCSV extends javax.swing.JPanel {
             new String [] {
                 "Fecha", "Hora", "Número de serie", "Lectura", "Contador"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTableInfoCSV);
 
         jButtonVerGrafica.setText("Ver Gráfica");

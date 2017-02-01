@@ -13,7 +13,9 @@ import org.jfree.chart.ChartFrame;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.PieDataset;
 
@@ -50,6 +52,10 @@ public class MostrarGraficaCSV extends javax.swing.JFrame {
                 chart.setBackgroundPaint(Color.white);
                 chart.removeLegend();
         
+        //Cambiar color de barras
+        CategoryPlot plot = (CategoryPlot) chart.getPlot();
+        BarRenderer barRenderer = (BarRenderer)plot.getRenderer();
+        barRenderer.setSeriesPaint(0, Color.decode("#5882FA"));
         
         // Mostrar Grafico
         ChartFrame frame = new ChartFrame("CONSUMO",chart);
