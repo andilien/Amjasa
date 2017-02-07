@@ -268,6 +268,8 @@ public class principal extends javax.swing.JFrame {
           valor = xml.leerXML().get( clave );
           System.out.println(clave + " " + valor);
         }
+        
+        //Abrir un frame para mostrar los datos en una tabla
     }//GEN-LAST:event_jMenuItemXMLActionPerformed
 
     /**
