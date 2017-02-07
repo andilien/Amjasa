@@ -7,6 +7,7 @@ package lectorarchivos;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -249,7 +250,7 @@ public class principal extends javax.swing.JFrame {
 
     //Opción para cargar el XML
     private void jMenuItemXMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemXMLActionPerformed
-        File ficheroXML = new File("C://Users/mgc/Downloads/DescargaContadores0.xml");
+        /*File ficheroXML = new File("C:/Users/agl/Desktop/DescargaContadores0.xml");
         if(ficheroXML==null){
              JOptionPane.showMessageDialog(null, "Sin ruta", "No se ha encontado la ruta del fichero", JOptionPane.ERROR);
             //System.out.println("No se ha encontrado el fichero");
@@ -257,6 +258,15 @@ public class principal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Ruta", "Se ha encontado la ruta del fichero", JOptionPane.ERROR);
             //System.out.println("Se ha encontado el fichero");
             
+        }*/
+        LeerXML xml = new LeerXML("C:/Users/agl/Desktop/DescargaContadores0.xml");
+        Enumeration e = xml.leerXML().keys();
+        Object clave;
+        Object valor;
+        while( e.hasMoreElements() ){
+          clave = e.nextElement();
+          valor = xml.leerXML().get( clave );
+          System.out.println(clave + " " + valor);
         }
     }//GEN-LAST:event_jMenuItemXMLActionPerformed
 
