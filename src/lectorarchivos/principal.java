@@ -48,6 +48,8 @@ public class principal extends javax.swing.JFrame {
                 close();
             }
         });
+        
+        
     }
     
     private void close(){
@@ -106,6 +108,7 @@ public class principal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItemOpenFile = new javax.swing.JMenuItem();
+        jMenuItemSelecCont = new javax.swing.JMenuItem();
         jMenu13 = new javax.swing.JMenu();
         jMenuItemXML = new javax.swing.JMenuItem();
 
@@ -209,6 +212,14 @@ public class principal extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItemOpenFile);
 
+        jMenuItemSelecCont.setText("Elegir Contador");
+        jMenuItemSelecCont.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemSelecContActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItemSelecCont);
+
         jMenuBar1.add(jMenu1);
 
         jMenu13.setText("Cargar");
@@ -259,18 +270,38 @@ public class principal extends javax.swing.JFrame {
             //System.out.println("Se ha encontado el fichero");
             
         }*/
-        LeerXML xml = new LeerXML("C:/Users/agl/Desktop/DescargaContadores0.xml");
+        LeerXML xml = new LeerXML("C:/Users/mgc/Desktop/DescargaContadores0.xml");
         Enumeration e = xml.leerXML().keys();
         Object clave;
         Object valor;
-        while( e.hasMoreElements() ){
-          clave = e.nextElement();
-          valor = xml.leerXML().get( clave );
-          System.out.println(clave + " " + valor);
-        }
         
+        if(!xml.equals(null)){
+            while( e.hasMoreElements() ){
+              clave = e.nextElement();
+              valor = xml.leerXML().get( clave );
+              System.out.println(clave + " " + valor);
+            }
+        }else{
+            System.out.println("No se ha podido encontrar el archivo xml");
+            try {
+                //Insertaremos un browser file para que el usuario pueda buscar el fichero
+                xml = new LeerXML(abrirSelectorXML());
+                while( e.hasMoreElements() ){
+                    clave = e.nextElement();
+                    valor = xml.leerXML().get( clave );
+                    System.out.println(clave + " " + valor);
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         //Abrir un frame para mostrar los datos en una tabla
     }//GEN-LAST:event_jMenuItemXMLActionPerformed
+
+    private void jMenuItemSelecContActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSelecContActionPerformed
+        //Llevar a una ventana donde puedas seleccionar el contador
+        SelecCont cont = new SelecCont();
+    }//GEN-LAST:event_jMenuItemSelecContActionPerformed
 
     /**
      * @param args the command line arguments
@@ -305,6 +336,26 @@ public class principal extends javax.swing.JFrame {
                 new principal().setVisible(true);
             }
         });
+    }
+    
+    //Crear método para abrir selector
+    public String abrirSelectorXML() throws IOException{
+        JFileChooser selector = new JFileChooser();
+        FileNameExtensionFilter filtroArchivo=new FileNameExtensionFilter("csv & xls & txt","csv","xls","txt");
+        selector.setFileFilter(filtroArchivo);
+        selector.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        selector.setMultiSelectionEnabled(false);
+        
+        int r=selector.showOpenDialog(this);
+        
+        
+        if(r==JFileChooser.APPROVE_OPTION){
+            //Recorremos el array de ficheros seleccionados
+            rutaFichero = selector.getSelectedFile().toPath().toAbsolutePath().toString(); 
+        }else{
+            System.out.println("Yo devuelvo nullo");
+        }
+        return rutaFichero;
     }
     
     //Crear método para abrir selector
@@ -345,9 +396,6 @@ public class principal extends javax.swing.JFrame {
         }else{
             System.out.println("Yo devuelvo nullo");
         }
-        
-      
-        
     }
     
    
@@ -438,6 +486,7 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JMenuItem jMenuItemOpenFile;
+    private static javax.swing.JMenuItem jMenuItemSelecCont;
     private static javax.swing.JMenuItem jMenuItemXML;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
     private java.awt.Menu menu1;

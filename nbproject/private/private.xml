@@ -5,16 +5,12 @@
             <url>src/lectorarchivos/principal.java</url>
             <bookmark id="1">
                 <name/>
-                <line>170</line>
+                <line>250</line>
                 <key/>
             </bookmark>
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/mgc/Desktop/lectorArchivos/Amjasa/src/lectorarchivos/principal.java</file>
-            <file>file:/C:/Users/mgc/Desktop/lectorArchivos/Amjasa/src/lectorarchivos/VerXML.java</file>
-            <file>file:/C:/Users/mgc/Desktop/lectorArchivos/Amjasa/src/lectorarchivos/LeerXML.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

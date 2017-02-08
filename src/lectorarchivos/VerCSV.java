@@ -255,7 +255,7 @@ public class VerCSV extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(278, 278, 278)
                                 .addComponent(jButtonVerGrafica)))
-                        .addGap(0, 221, Short.MAX_VALUE)))
+                        .addGap(0, 127, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(

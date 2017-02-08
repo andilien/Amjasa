@@ -29,22 +29,23 @@ public class LeerXML {
    public Hashtable<String,String> leerXML(){
        Hashtable<String,String> contadores = new Hashtable();
       try {	
-         File inputFile = new File(this.getArchivo());
-         DocumentBuilderFactory dbFactory 
-            = DocumentBuilderFactory.newInstance();
-         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-         Document doc = dBuilder.parse(inputFile);
-         doc.getDocumentElement().normalize();
-         NodeList nList = doc.getElementsByTagName("Meter");
-         for (int temp = 0; temp < nList.getLength(); temp++) {
-            Node nNode = nList.item(temp);
-            if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-               Element eElement = (Element) nNode;
-               if (Integer.parseInt(eElement.getElementsByTagName("Baja").item(0).getTextContent()) == 0 && !eElement.getElementsByTagName("Situation").item(0).getTextContent().isEmpty()) {
-                    contadores.put(eElement.getElementsByTagName("MeterNumber").item(0).getTextContent(), eElement.getElementsByTagName("Situation").item(0).getTextContent());
+            File inputFile = new File(this.getArchivo());
+
+            DocumentBuilderFactory dbFactory 
+               = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(inputFile);
+            doc.getDocumentElement().normalize();
+            NodeList nList = doc.getElementsByTagName("Meter");
+            for (int temp = 0; temp < nList.getLength(); temp++) {
+               Node nNode = nList.item(temp);
+               if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                  Element eElement = (Element) nNode;
+                  if (Integer.parseInt(eElement.getElementsByTagName("Baja").item(0).getTextContent()) == 0 && !eElement.getElementsByTagName("Situation").item(0).getTextContent().isEmpty()) {
+                       contadores.put(eElement.getElementsByTagName("MeterNumber").item(0).getTextContent(), eElement.getElementsByTagName("Situation").item(0).getTextContent());
+                  }
                }
             }
-         }
       } catch (Exception e) {
          e.printStackTrace();
       }
