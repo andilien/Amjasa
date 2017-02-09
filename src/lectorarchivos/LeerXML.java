@@ -9,8 +9,12 @@ package lectorarchivos;
  *
  * @author AGL
  */
+import Clases.Contador;
 import java.io.File;
+import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Set;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import org.w3c.dom.Document;
@@ -20,6 +24,7 @@ import org.w3c.dom.Element;
 
 public class LeerXML {
    private String archivo;
+
    public LeerXML(String archivo) {
        this.archivo = archivo;
    }

@@ -270,7 +270,7 @@ public class principal extends javax.swing.JFrame {
             //System.out.println("Se ha encontado el fichero");
             
         }*/
-        LeerXML xml = new LeerXML("C:/Users/mgc/Desktop/DescargaContadores0.xml");
+        /*LeerXML xml = new LeerXML("C:/Users/mgc/Desktop/DescargaContadores0.xml");
         Enumeration e = xml.leerXML().keys();
         Object clave;
         Object valor;
@@ -294,7 +294,7 @@ public class principal extends javax.swing.JFrame {
             } catch (IOException ex) {
                 Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
+        }*/
         //Abrir un frame para mostrar los datos en una tabla
     }//GEN-LAST:event_jMenuItemXMLActionPerformed
 
