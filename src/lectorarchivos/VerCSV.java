@@ -204,14 +204,7 @@ public class VerCSV extends javax.swing.JPanel {
             System.out.println("Tamaño de la lista de numContadores: "+codigoContadores.size());
             System.out.println("Datos del array: " + codigoContadores.toString());
             
-            //Ahora insertamos los datos del set dentro del combo
-            /*Iterator iterator = codigoContadores.iterator();
-            while(iterator.hasNext()){
-                String codigo = (String) iterator.next();
-                //Insertar el código en el combo
-                jComboBoxContador.addItem(codigo);
-            }*/
-            
+           
             //Leer el XML para mostrar el nombre del contador
             leerXML();
             
@@ -254,9 +247,12 @@ public class VerCSV extends javax.swing.JPanel {
             
             Iterator iter = nombreContadores.iterator();
             while(iter.hasNext()){
-                String codigo = (String) iter.next();
-                jComboBoxContador.addItem(codigo);
+                String nombre = (String) iter.next();
+                jComboBoxContador.addItem(nombre);
             }
+            
+            
+            
         }else{
             System.out.println("No se ha podido encontrar el archivo xml");
             try {
