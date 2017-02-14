@@ -31,10 +31,12 @@ import javax.swing.JTable;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
@@ -62,7 +64,8 @@ public class VerCSV extends javax.swing.JPanel {
             Tendremos que pasarle la tabla y el la ruta
             del fichero
         */
-        llenarTabla(jTableInfoCSV,fichero);        
+        llenarTabla(jTableInfoCSV,fichero);  
+        
     }
     
     public static void llenarTabla(JTable tabla, File fichero) throws FileNotFoundException, IOException{
@@ -210,6 +213,9 @@ public class VerCSV extends javax.swing.JPanel {
             
             //Editar el modelo de la tabla
             tabla.setModel(model);
+            
+            //Llamamos al método para mostrar la gráfica
+            mostrarGrafica(jTableInfoCSV);
 
         } catch (Exception e) {
            
@@ -269,6 +275,41 @@ public class VerCSV extends javax.swing.JPanel {
         }
     }
     
+    //Crear metodo para mostrar la gráfica
+    public static void mostrarGrafica(JTable jTableInfoCSV){
+        //Fuente de datos
+        DefaultCategoryDataset dataset =  new DefaultCategoryDataset();
+        
+        //Recorremos la columna del consumo de la tabla
+        for(int i=jTableInfoCSV.getRowCount()-1;i>=0;i--){
+            if (Double.parseDouble(jTableInfoCSV.getValueAt(i,4).toString()) > 0)
+                dataset.setValue(Double.parseDouble(jTableInfoCSV.getValueAt(i,4).toString()),"Consumo", jTableInfoCSV.getValueAt(i, 0).toString());
+        }
+        
+        //Creando el gráfico
+        JFreeChart chart = ChartFactory.createBarChart3D
+                ("Consumo","Fecha","Consumo",
+                dataset, PlotOrientation.VERTICAL, true,true, false);
+                chart.setBackgroundPaint(Color.cyan);
+                chart.getTitle().setPaint(Color.black);
+                chart.setBackgroundPaint(Color.white);
+                chart.removeLegend();
+        
+        //Cambiar color de barras
+        CategoryPlot plot = (CategoryPlot) chart.getPlot();
+        BarRenderer barRenderer = (BarRenderer)plot.getRenderer();
+        barRenderer.setSeriesPaint(0, Color.decode("#5882FA"));
+        
+        // Mostrar Grafico
+        ChartFrame frame = new ChartFrame("CONSUMO",chart);
+        frame.pack();
+        frame.getChartPanel().setMouseZoomable(false);
+        frame.setVisible(true);
+        
+        panel.add(frame);
+        
+    }
+    
     //Crear método para abrir selector
     public static String abrirSelectorXML() throws IOException{
         JFileChooser selector = new JFileChooser();
@@ -303,6 +344,7 @@ public class VerCSV extends javax.swing.JPanel {
         jButtonVerGrafica = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jComboBoxContador = new javax.swing.JComboBox<>();
+        panel = new javax.swing.JPanel();
 
         jTableInfoCSV.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -333,24 +375,30 @@ public class VerCSV extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel1.setText("Seleccionar contador");
 
+        javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
+        panel.setLayout(panelLayout);
+        panelLayout.setHorizontalGroup(
+            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        panelLayout.setVerticalGroup(
+            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 331, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(922, Short.MAX_VALUE)
-                        .addComponent(jButtonVerGrafica))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jComboBoxContador, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addGap(40, 40, 40)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxContador, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 396, Short.MAX_VALUE)
+                .addComponent(jButtonVerGrafica)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -361,10 +409,16 @@ public class VerCSV extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jComboBoxContador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 294, Short.MAX_VALUE)
-                .addComponent(jButtonVerGrafica)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonVerGrafica)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(32, Short.MAX_VALUE))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -380,6 +434,7 @@ public class VerCSV extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private static javax.swing.JTable jTableInfoCSV;
+    private static javax.swing.JPanel panel;
     // End of variables declaration//GEN-END:variables
 
 }
